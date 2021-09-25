@@ -1,0 +1,3 @@
+[submodule "bibin"]
+	path = bibin
+	url = https://github.com/Blizarre/bibin
