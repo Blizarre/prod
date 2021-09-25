@@ -3,9 +3,11 @@
 cd "$(dirname "$0")"
 
 git submodule init
+git submodule update
 
 ### Install docker and packages
-sudo apt-get -y remove docker docker-engine docker.io containerd runc snapd
+sudo apt-get -y remove docker docker-engine docker.io containerd runc || true
+sudo apt-get -y remove snapd
 sudo apt -y autoremove
 
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release tmux vim htop
