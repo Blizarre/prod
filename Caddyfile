@@ -1,7 +1,7 @@
-s.marache.net {
+p.marache.net {
   reverse_proxy bibin:8000
 }
 
-w.marache.net {
+wiki.marache.net {
   reverse_proxy wikijs:3000
 }
