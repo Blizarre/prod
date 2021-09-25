@@ -1,3 +1,6 @@
 [submodule "bibin"]
 	path = bibin
 	url = https://github.com/Blizarre/bibin
+[submodule "marache.net"]
+	path = marache.net
+	url = https://github.com/Blizarre/marache.net
