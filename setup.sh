@@ -2,8 +2,7 @@
 
 cd "$(dirname "$0")"
 
-git submodule init
-git submodule update
+git submodule update --init --recursive
 
 ### Install docker and packages
 sudo apt-get -y remove docker docker-engine docker.io containerd runc || true
