@@ -10,7 +10,7 @@ sudo apt-get -y remove docker docker-engine docker.io containerd runc || true
 sudo apt-get -y remove snapd
 sudo apt -y autoremove
 
-sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release tmux vim htop
+sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release tmux vim htop hugo
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 echo \

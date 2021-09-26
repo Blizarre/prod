@@ -5,3 +5,13 @@ p.marache.net {
 wiki.marache.net {
   reverse_proxy wikijs:3000
 }
+
+marache.net www.marache.net {
+  request_header Host marache-net-static.s3.eu-central-1.amazonaws.com
+  reverse_proxy /img/* https://marache-net-static.s3.eu-central-1.amazonaws.com
+  reverse_proxy /files/* https://marache-net-static.s3.eu-central-1.amazonaws.com
+  reverse_proxy /projects/* https://marache-net-static.s3.eu-central-1.amazonaws.com
+
+  root * /srv/marache-net/
+  file_server
+}
