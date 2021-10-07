@@ -6,3 +6,6 @@
 	path = marache.net
 	url = https://github.com/Blizarre/marache.net
 	branch = master
+[submodule "faas"]
+	path = faas
+	url = https://github.com/blizarre/faas.git

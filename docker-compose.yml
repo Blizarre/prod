@@ -28,6 +28,13 @@ services:
       - ROCKET_DATABASE_FILE=/db/db.sqlite
       - ROCKET_PREFIX=$ROCKET_PREFIX
       - ROCKET_ADDRESS=0.0.0.0
+
+  faas:
+    build: ./faas/
+    restart: unless-stopped
+    environment:
+      - ROCKET_ADDRESS=0.0.0.0
+
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
