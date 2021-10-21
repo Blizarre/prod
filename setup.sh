@@ -25,9 +25,11 @@ sudo docker volume create --name=bibin_data
 sudo docker volume create --name=caddy_data
 sudo docker volume create --name=caddy_config
 sudo docker volume create --name=wikijs_data
+sudo docker volume create --name=youtube_files
 
 sudo docker-compose build
 
 sudo docker run -v bibin_data:/db --entrypoint /bin/bash --user root prod_bibin -c "chown -R nobody /db"
+sudo docker run -v youtube_files:/youtube_files --entrypoint /bin/bash --user root prod_yaas -c "chown -R nobody /youtube_files"
 sudo docker-compose up -d
 ./install_cron_backup.sh

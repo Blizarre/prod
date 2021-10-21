@@ -41,11 +41,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - YAAS_BASICAUTH=$YAAS_BASICAUTH
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
       - ./marache.net/public/:/srv/marache-net
+      - youtube_files:/srv/yaas/files
 
   wikijs_db:
     image: postgres:11-alpine
@@ -68,6 +71,29 @@ services:
       DB_USER: $POSTGRES_USER
       DB_PASS: $POSTGRES_PASSWORD
       DB_NAME: $POSTGRES_DB
+
+  yaas:
+    build: ./yaas/
+    links:
+      - redis
+      - celery
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+      VIDEO_DIR: "/youtube_files"
+    command: flask run --host=0.0.0.0
+  redis:
+    image: redis
+  celery:
+    volumes:
+      - youtube_files:/youtube_files
+    build: ./yaas/
+    command: celery -A tasks worker --loglevel=INFO
+    links:
+      - redis
+    environment:
+      REDIS_URL: "redis://redis:6379/0"
+      VIDEO_DIR: "/youtube_files"
+
 volumes:
   caddy_data:
     external: true
@@ -75,4 +101,6 @@ volumes:
   bibin_data:
     external: true
   wikijs_data:
+    external: true
+  youtube_files:
     external: true

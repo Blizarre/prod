@@ -20,3 +20,19 @@ marache.net www.marache.net {
   file_server
 }
 
+
+yaas.marache.net {
+  basicauth {
+    bob {$YAAS_BASICAUTH}
+  }
+  rewrite /files /files/
+  rewrite / /status
+
+  file_server /files/* browse {
+    root /srv/yaas/
+  }
+
+  reverse_proxy /clean http://yaas:5000
+  reverse_proxy /status http://yaas:5000
+  reverse_proxy /download http://yaas:5000
+}

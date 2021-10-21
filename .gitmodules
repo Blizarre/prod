@@ -9,3 +9,6 @@
 [submodule "faas"]
 	path = faas
 	url = https://github.com/blizarre/faas.git
+[submodule "yaas"]
+	path = yaas
+	url = https://github.com/blizarre/yaas.git
