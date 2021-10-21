@@ -48,7 +48,7 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       - ./marache.net/public/:/srv/marache-net
-      - youtube_files:/srv/yaas/files
+      - youtube_files:/srv/yaas/files:ro
 
   wikijs_db:
     image: postgres:11-alpine
