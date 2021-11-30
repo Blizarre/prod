@@ -73,6 +73,7 @@ services:
       DB_NAME: $POSTGRES_DB
 
   yaas:
+    restart: unless-stopped
     build: ./yaas/
     links:
       - redis
@@ -82,8 +83,10 @@ services:
       VIDEO_DIR: "/youtube_files"
     command: flask run --host=0.0.0.0
   redis:
+    restart: unless-stopped
     image: redis
   celery:
+    restart: unless-stopped
     volumes:
       - youtube_files:/youtube_files
     build: ./yaas/
