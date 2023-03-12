@@ -76,6 +76,8 @@ services:
   englishify:
     restart: unless-stopped
     build: ./englishify/
+    environment:
+      OPENAI_API_KEY: $OPENAI_API_KEY
 
   yaas:
     restart: unless-stopped
