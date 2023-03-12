@@ -12,3 +12,6 @@
 [submodule "yaas"]
 	path = yaas
 	url = https://github.com/blizarre/yaas.git
+[submodule "englishify"]
+	path = englishify
+	url = https://github.com/blizarre/englishify.git
