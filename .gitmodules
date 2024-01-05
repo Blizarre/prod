@@ -11,3 +11,6 @@
 [submodule "englishify"]
 	path = englishify
 	url = https://github.com/blizarre/englishify.git
+[submodule "pouch2inflame"]
+	path = pouch2inflame
+	url = https://github.com/blizarre/pouch2inflame.git
