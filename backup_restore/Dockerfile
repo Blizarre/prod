@@ -1,7 +1,6 @@
 FROM postgres:11-alpine
 
-RUN apk add curl python3 bzip2 sqlite
-RUN python3 -m ensurepip && pip3 install awscli --upgrade
+RUN apk add --no-cache curl python3 bzip2 sqlite aws-cli
 
 COPY backup.sh /usr/local/bin/
 
