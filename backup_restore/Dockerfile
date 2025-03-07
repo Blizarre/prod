@@ -1,6 +1,6 @@
 FROM postgres:11-alpine
 
-RUN apk add --no-cache curl python3 bzip2 sqlite aws-cli
+RUN apk add --no-cache curl python3 bzip2 sqlite openssh
 
 COPY backup.sh /usr/local/bin/
 
