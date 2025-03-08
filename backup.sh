@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-sudo docker-compose run backup_restore backup
+docker compose run backup_restore backup
