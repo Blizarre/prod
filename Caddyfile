@@ -6,26 +6,10 @@ wiki.marache.net {
   reverse_proxy wikijs:3000
 }
 
-englishify.uk {
-  reverse_proxy englishify:8000
-}
-
 faas.marache.net {
   reverse_proxy faas:8000
 }
 
-yaas.marache.net {
-  basicauth {
-    bob {$YAAS_BASICAUTH}
-  }
-  rewrite /files /files/
-  rewrite / /status
-
-  file_server /files/* browse {
-    root /srv/yaas/
-  }
-
-  reverse_proxy /clean http://yaas:5000
-  reverse_proxy /status http://yaas:5000
-  reverse_proxy /download http://yaas:5000
+wall.marache.net {
+  reverse_proxy wallabag:80
 }

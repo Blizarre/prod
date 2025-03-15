@@ -25,7 +25,8 @@ sudo docker volume create --name=bibin_data
 sudo docker volume create --name=caddy_data
 sudo docker volume create --name=caddy_config
 sudo docker volume create --name=wikijs_data
-sudo docker volume create --name=youtube_files
+sudo docker volume create --name=wallabag_data
+sudo docker volume create --name=wallabag_images
 
 sudo docker-compose build
 

@@ -10,6 +10,15 @@ services:
       - bibin_data:/db
       - /home/ubuntu/.ssh:/ssh_host
 
+  wallabag:
+    image: wallabag/wallabag
+    volumes:
+     - wallabag_data:/var/www/wallabag/data
+     - wallabag_images:/var/www/wallabag/web/assets/images
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME=https://wall.marache.net/
+      - SYMFONY__ENV__FOSUSER_REGISTRATION="false"
+
   bibin:
     build: ./bibin/
     restart: unless-stopped
@@ -37,13 +46,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - YAAS_BASICAUTH=$YAAS_BASICAUTH
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
-      - youtube_files:/srv/yaas/files:ro
 
   wikijs_db:
     image: postgres:11-alpine
@@ -67,38 +73,6 @@ services:
       DB_PASS: $POSTGRES_PASSWORD
       DB_NAME: $POSTGRES_DB
 
-  englishify:
-    restart: unless-stopped
-    build: ./englishify/
-    environment:
-      OPENAI_API_KEY: $OPENAI_API_KEY
-      SENTRY_SDK_URL: $SENTRY_SDK_URL
-
-  yaas:
-    restart: unless-stopped
-    build: ./yaas/
-    links:
-      - redis
-      - celery
-    environment:
-      REDIS_URL: "redis://redis:6379/0"
-      VIDEO_DIR: "/youtube_files"
-    command: flask run --host=0.0.0.0
-  redis:
-    restart: unless-stopped
-    image: redis
-  celery:
-    restart: unless-stopped
-    volumes:
-      - youtube_files:/youtube_files
-    build: ./yaas/
-    command: celery -A tasks worker --loglevel=INFO
-    links:
-      - redis
-    environment:
-      REDIS_URL: "redis://redis:6379/0"
-      VIDEO_DIR: "/youtube_files"
-
 volumes:
   caddy_data:
     external: true
@@ -107,5 +81,7 @@ volumes:
     external: true
   wikijs_data:
     external: true
-  youtube_files:
+  wallabag_data:
+    external: true
+  wallabag_images:
     external: true
