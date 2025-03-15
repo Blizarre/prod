@@ -17,7 +17,6 @@ services:
      - wallabag_images:/var/www/wallabag/web/assets/images
     environment:
       - SYMFONY__ENV__DOMAIN_NAME=https://wall.marache.net/
-      - SYMFONY__ENV__FOSUSER_REGISTRATION="false"
 
   bibin:
     build: ./bibin/
