@@ -16,6 +16,12 @@ if [[ "$ACTION" = "backup" ]]; then
     bzip2 bibin_data.sqlite3
     scp bibin_data.sqlite3.bz2 hetzner:bibin_backup_$(date +"%u").bz2
     scp bibin_data.sqlite3.bz2 hetzner:bibin_backup_latest.bz2
+
+    cp "$KANBAN_DB" kanban.db
+    bzip2 kanban.db
+    scp kanban.db.bz2 hetzner:kanban_backup_$(date +"%u").bz2
+    scp kanban.db.bz2 hetzner:kanban_backup_latest.bz2
+
 elif [[ "$ACTION" = "restore" ]]; then
     ssh hetzner cat wiki_backup_latest.bz2 | \
         bunzip2 | \
@@ -29,6 +35,9 @@ elif [[ "$ACTION" = "restore" ]]; then
     rm -f "$SQLITE_FILE"-*
     ssh hetzner cat bibin_backup_latest.bz2 | \
         bunzip2 > "$SQLITE_FILE"
+
+    ssh hetzner cat kanban_backup_latest.bz2 | \
+        bunzip2 > "$KANBAN_DB"
 else
     echo "Nothing to do"
 fi

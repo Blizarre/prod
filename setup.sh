@@ -27,6 +27,7 @@ sudo docker volume create --name=caddy_config
 sudo docker volume create --name=wikijs_data
 sudo docker volume create --name=wallabag_data
 sudo docker volume create --name=wallabag_images
+sudo docker volume create --name=kanban_data
 
 sudo docker-compose build
 

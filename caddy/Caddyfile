@@ -1,0 +1,58 @@
+{
+    security {
+        oauth identity provider google {
+            realm google
+            driver google
+            client_id {env.GOOGLE_CLIENT_ID}
+            client_secret {env.GOOGLE_CLIENT_SECRET}
+            scopes openid email profile
+        }
+
+        authentication portal myportal {
+            crypto default token lifetime 3600
+            crypto key sign-verify {env.JWT_SHARED_KEY}
+            enable identity provider google
+            cookie domain k.marache.net
+
+            transform user {
+                match realm google
+                match email {env.USER_EMAIL}
+                action add role authp/user
+	    }
+        }
+
+        authorization policy mypolicy {
+            set auth url https://k.marache.net/oauth2/google
+            allow roles authp/user
+            validate bearer header
+            crypto key verify {env.JWT_SHARED_KEY}
+        }
+    }
+}
+
+k.marache.net {
+    reverse_proxy kanban:8000
+    route /oauth2/* {
+        authenticate with myportal
+    }
+    route /* {
+        authorize with mypolicy
+    }
+}
+
+
+p.marache.net {
+  reverse_proxy bibin:8000
+}
+
+wiki.marache.net {
+  reverse_proxy wikijs:3000
+}
+
+faas.marache.net {
+  reverse_proxy faas:8000
+}
+
+wall.marache.net {
+  reverse_proxy wallabag:80
+}

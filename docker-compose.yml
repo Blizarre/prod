@@ -6,8 +6,10 @@ services:
       - POSTGRES_USER=$POSTGRES_USER
       - PGPASSWORD=$POSTGRES_PASSWORD
       - SQLITE_FILE=/db/db.sqlite
+      - KANBAN_DB=/kanban/database.json
     volumes:
       - bibin_data:/db
+      - kanban_data:/kanban
       - /home/ubuntu/.ssh:/ssh_host
 
   wallabag:
@@ -40,15 +42,20 @@ services:
       - ROCKET_URL_PREFIX=https://faas.marache.net/
 
   caddy:
-    image: caddy:2-alpine
+    build: ./caddy/
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+    environment:
+      - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+      - JWT_SHARED_KEY=$JWT_SHARED_KEY
+      - USER_EMAIL=$USER_EMAIL
 
   wikijs_db:
     image: postgres:11-alpine
@@ -72,6 +79,15 @@ services:
       DB_PASS: $POSTGRES_PASSWORD
       DB_NAME: $POSTGRES_DB
 
+  kanban:
+    container_name: kanban
+    build: ./vibe-kanban
+    volumes:
+      - kanban_data:/app/data
+    environment:
+      - DATA_DIR=/app/data
+    restart: unless-stopped
+
 volumes:
   caddy_data:
     external: true
@@ -81,6 +97,8 @@ volumes:
   wikijs_data:
     external: true
   wallabag_data:
+    external: true
+  kanban_data:
     external: true
   wallabag_images:
     external: true
